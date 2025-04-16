@@ -1,0 +1,18 @@
+@import url("https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@800&family=Public+Sans:wght@100..900&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  body {
+    font-family: "Public Sans", sans-serif;
+    @apply bg-light text-dark;
+  }
+}
+
+@layer utilities {
+  .border-brutal {
+    @apply border-2 border-dark rounded-[32px];
+  }
+}
