@@ -20,8 +20,21 @@ function App() {
       text: value,
       completed: false,
     };
-    setTodos((todos) => [...todos, payload]);
+    setTodos((todos) => [payload, ...todos]);
     setNewTodo("");
+  };
+
+  const toggleTodo = (id: string) => {
+    const updatedTodos = todos.map((todo) => {
+      if (todo.id === id) {
+        return { ...todo, completed: !todo.completed };
+      }
+      return todo;
+    });
+
+    setTodos(
+      updatedTodos.sort((a, b) => Number(a.completed) - Number(b.completed))
+    );
   };
 
   return (
@@ -54,7 +67,16 @@ function App() {
 
       <main className="flex flex-col gap-3">
         {(todos ?? []).map((todo) => {
-          return <TodoItem key={todo.id} text={todo.text} />;
+          return (
+            <TodoItem
+              key={todo.id}
+              text={todo.text}
+              completed={todo.completed}
+              onTick={() => {
+                toggleTodo(todo.id);
+              }}
+            />
+          );
         })}
       </main>
     </div>
