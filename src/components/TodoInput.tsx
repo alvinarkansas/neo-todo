@@ -31,7 +31,7 @@ export const TodoInput = ({
       <button
         onClick={onPlusButtonClick}
         disabled={!value}
-        className="p-2 text-lg bg-white border-brutal transform hover:-translate-y-1 transition-transform disabled:opacity-15 disabled:hover:translate-y-0"
+        className="p-2 text-lg bg-white border-brutal transform lg:hover:-translate-y-1 transition-transform disabled:opacity-15 disabled:hover:translate-y-0"
       >
         <Plus size={32} />
       </button>
