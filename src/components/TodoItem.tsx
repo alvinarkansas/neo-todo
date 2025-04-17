@@ -1,6 +1,5 @@
 import { Check, Trash, Undo } from "lucide-react";
 import { motion } from "motion/react";
-import { ease } from "../constants/animation";
 
 type Props = {
   text: string;
@@ -23,7 +22,7 @@ export const TodoItem = ({
       initial={{ height: 0, opacity: 0 }}
       animate={{ height: "auto", opacity: 1 }}
       exit={{ height: 0, opacity: 0 }}
-      transition={{ duration: 0.4, ease }}
+      transition={{ duration: 0.2, ease: "easeOut" }}
     >
       <motion.div
         layout
@@ -32,13 +31,14 @@ export const TodoItem = ({
         }`}
         initial={{
           opacity: 0,
-          y: -8,
+          x: -32,
           scale: 0.98,
           filter: "blur(4px)",
           marginTop: 0,
         }}
         animate={{
           opacity: 1,
+          x: 0,
           y: 0,
           scale: 1,
           filter: "blur(0px)",
@@ -51,7 +51,7 @@ export const TodoItem = ({
           filter: "blur(4px)",
           marginTop: 0,
         }}
-        transition={{ duration: 0.4, ease }}
+        transition={{ duration: 0.2, ease: "easeOut" }}
       >
         {completed ? (
           <Check size={20} />

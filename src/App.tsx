@@ -1,11 +1,14 @@
 import { Plus } from "lucide-react";
-import { TodoItem } from "./components/TodoItem";
 import { useEffect, useState } from "react";
-import { Todo } from "./types/todo";
 import { AnimatePresence } from "motion/react";
+import { TodoFilterButton } from "./components/TodoFilterButton";
+import { TodoItem } from "./components/TodoItem";
+import { FILTER_OPTIONS } from "./constants";
+import type { FilterOption, Todo } from "./types/todo";
 
 function App() {
   const [newTodo, setNewTodo] = useState("");
+  const [filter, setFilter] = useState<FilterOption>("all");
   const [todos, setTodos] = useState<Todo[]>(() => {
     const savedTodos = localStorage.getItem("todos");
     return savedTodos ? JSON.parse(savedTodos) : [];
@@ -45,8 +48,21 @@ function App() {
     setTodos(updatedTodos);
   };
 
+  const filterTodo = (status: "all" | "active" | "completed") => {
+    switch (status) {
+      case "active":
+        return todos.filter((todo) => !todo.completed);
+      case "completed":
+        return todos.filter((todo) => todo.completed);
+      default:
+        return todos;
+    }
+  };
+
+  const filteredTodos = filterTodo(filter);
+
   return (
-    <div className="max-w-3xl mx-auto px-4 py-8">
+    <div className="sm:max-w-xl lg:max-w-3xl mx-auto px-4 py-8">
       <header className="p-4 bg-danger border-brutal mb-4">
         <h1 className="text-[40px] font-extrabold font-brutal leading-none mb-4">
           You have {activeTasks} tasks
@@ -63,6 +79,7 @@ function App() {
             onChange={(e) => setNewTodo(e.target.value)}
             placeholder="Add a new task..."
             className="px-4 py-2 text-lg bg-white border-brutal placeholder:text-gray-300 flex-1 outline-none"
+            size={1}
           />
           <button
             onClick={() => addTodo(newTodo)}
@@ -74,8 +91,23 @@ function App() {
         </div>
       </header>
 
+      <section className="flex gap-2 w-full mb-6">
+        {FILTER_OPTIONS.map((option) => {
+          return (
+            <TodoFilterButton
+              key={option.value}
+              label={option.label}
+              active={filter === option.value}
+              onClick={() => {
+                setFilter(option.value);
+              }}
+            />
+          );
+        })}
+      </section>
+
       <AnimatePresence initial={false}>
-        {(todos ?? []).map((todo) => {
+        {(filteredTodos ?? []).map((todo) => {
           return (
             <TodoItem
               key={todo.id}
