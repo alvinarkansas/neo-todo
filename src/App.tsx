@@ -2,6 +2,7 @@ import { Plus } from "lucide-react";
 import { TodoItem } from "./components/TodoItem";
 import { useEffect, useState } from "react";
 import { Todo } from "./types/todo";
+import { AnimatePresence } from "motion/react";
 
 function App() {
   const [newTodo, setNewTodo] = useState("");
@@ -65,14 +66,15 @@ function App() {
           />
           <button
             onClick={() => addTodo(newTodo)}
-            className="p-2 text-lg bg-white border-brutal transform hover:-translate-y-1 hover: transition-transform"
+            disabled={!newTodo}
+            className="p-2 text-lg bg-white border-brutal transform hover:-translate-y-1 transition-transform disabled:opacity-15 disabled:hover:translate-y-0"
           >
             <Plus size={32} />
           </button>
         </div>
       </header>
 
-      <main className="flex flex-col gap-3">
+      <AnimatePresence initial={false}>
         {(todos ?? []).map((todo) => {
           return (
             <TodoItem
@@ -91,7 +93,7 @@ function App() {
             />
           );
         })}
-      </main>
+      </AnimatePresence>
     </div>
   );
 }
