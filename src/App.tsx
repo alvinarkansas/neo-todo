@@ -10,6 +10,8 @@ function App() {
     return savedTodos ? JSON.parse(savedTodos) : [];
   });
 
+  const activeTasks = todos.filter((todo) => !todo.completed).length;
+
   useEffect(() => {
     localStorage.setItem("todos", JSON.stringify(todos));
   }, [todos]);
@@ -46,7 +48,7 @@ function App() {
     <div className="max-w-3xl mx-auto px-4 py-8">
       <header className="p-4 bg-danger border-brutal mb-4">
         <h1 className="text-[40px] font-extrabold font-brutal leading-none mb-4">
-          You have {todos.length} tasks
+          You have {activeTasks} tasks
         </h1>
         <div className="flex gap-2">
           <input
