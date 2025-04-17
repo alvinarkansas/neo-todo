@@ -37,6 +37,11 @@ function App() {
     );
   };
 
+  const deleteTodo = (id: string) => {
+    const updatedTodos = todos.filter((todo) => todo.id !== id);
+    setTodos(updatedTodos);
+  };
+
   return (
     <div className="max-w-3xl mx-auto px-4 py-8">
       <header className="p-4 bg-danger border-brutal mb-4">
@@ -72,6 +77,12 @@ function App() {
               key={todo.id}
               text={todo.text}
               completed={todo.completed}
+              onDelete={() => {
+                deleteTodo(todo.id);
+              }}
+              onUndo={() => {
+                toggleTodo(todo.id);
+              }}
               onTick={() => {
                 toggleTodo(todo.id);
               }}
