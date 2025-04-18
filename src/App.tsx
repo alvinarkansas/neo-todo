@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 import { AnimatePresence } from "motion/react";
 import { Headline } from "./components/Headline";
 import { TodoFilterButton } from "./components/TodoFilterButton";
@@ -21,7 +22,7 @@ function App() {
 
   const addTodo = (value: string) => {
     const payload = {
-      id: crypto.randomUUID(),
+      id: uuidv4(),
       text: value,
       completed: false,
     };
@@ -69,10 +70,7 @@ function App() {
           onChange={(e) => {
             setNewTodo(e.target.value);
           }}
-          onEnter={() => {
-            addTodo(newTodo);
-          }}
-          onPlusButtonClick={() => {
+          onSubmit={() => {
             addTodo(newTodo);
           }}
         />
